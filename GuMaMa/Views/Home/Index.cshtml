@@ -10,75 +10,24 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>博弈</title>
+    <title>花生豆の妈妈</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-1.10.2.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
+    <style>
+        body {
+            background-image: url(../../Content/images/banner.png);
+            background-size:cover;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
 
-        <div class="alert alert-success" role="alert">
-            <strong>说明：</strong> 同正 +3 ，同负 +1，正负相反 -2
-        </div>
-        <button class="btn btn-primary" type="button">
-            得分： <span class="badge" id="total">0</span>
-        </button>
-        <button class="btn btn-primary" type="button">
-            第 <span class="badge" id="clickcount">0</span>次点击
-        </button>
-
-        <hr />
-        <div id="content">
-            <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default">电脑：</button>
-                <button id="admin" type="button" class="btn btn-default">用户选择后显示</button>
             </div>
-            <br />
-            <br />
-            <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default">用户：</button>
-                <button id="user" type="button" class="btn btn-default">请选择下列按钮</button>
-            </div>
-            <hr />
-            <button id="zheng" class="btn btn-success" onclick="userClick(1);">正</button>
-            <button id="fu" style="margin-left: 50px" class="btn btn-info" onclick="userClick(2);">负</button>
-        </div>
-        <hr />
-        <div>
-            <button id="reset" class="btn btn-default" onclick="reset()">重置</button>
         </div>
     </div>
 </body>
 </html>
-
-<script>
-    function userClick(id) {
-        if (id == 1) {
-            $("#user").text("正");
-        } else {
-            $("#user").text("负");
-        }
-        $("#admin").text("等待结果ing");
-        $.ajax({
-            url: '/home/Result/',
-            type: 'POST',
-            data: {
-                id: id, total: $("#total").text(), clickcount: $("#clickcount").text()
-            },
-            dataType: 'json',
-            error: function () {
-                alert('error');
-            },
-            success: function (obj) {
-                $("#total").text(obj.total);
-                $("#admin").text(obj.resultStr);
-                $("#clickcount").text(obj.clickCount);
-            }
-        });
-    }
-
-    function reset() {
-        window.location.reload();
-    }
-</script>
