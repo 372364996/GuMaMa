@@ -16,12 +16,15 @@
     <script src="~/Scripts/bootstrap.js"></script>
     <style>
         body {
-            background-image: url(../../Content/images/banner.png);
-            background-size:cover;
+            background-image: url(../../Content/images/banner.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
         }
     </style>
 </head>
 <body>
+    @* <embed src="~/Content/media/" hidden="true" autostart="true" loop="true">*@
+    <video autoplay="autoplay" name="media"><source src="~/Content/media/laomu.m4a" type="audio/mpeg"></video>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
