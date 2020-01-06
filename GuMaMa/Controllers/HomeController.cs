@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -35,9 +39,9 @@ namespace GuMaMa.Controllers
         /// <param name="clickCount">点击次数</param>
         /// <param name="number">概率</param>
         /// <returns></returns>
-        public JsonResult Result(int total, int id,int clickCount, double number = 36.7)
+        public JsonResult Result(int total, int id, int clickCount, double number = 36.7)
         {
-            
+
             clickCount += 1;
             Random rd = new Random();
             int rdNumber = rd.Next(0, 99);
@@ -59,6 +63,21 @@ namespace GuMaMa.Controllers
             }
             total -= 2;
             return Json(new { success = true, msg = "正负相反减2分", resultStr = "负", total, clickCount });
+        }
+
+        public ActionResult GeneratePic()
+        {
+            var imgPoster = Bitmap.FromFile(HttpContext.Server.MapPath("~/Content/images/yuebao.png"));
+            using (Graphics g = Graphics.FromImage(imgPoster))
+            {
+                var name = "用户名:进击的";
+                Font fontName = new Font("微软雅黑", 20,FontStyle.Bold);
+                SizeF nameSize = g.MeasureString(name, fontName);
+                SolidBrush nameBrush = new SolidBrush(Color.FromArgb(182, 29, 28));
+                g.DrawString(name, fontName, nameBrush, new PointF((imgPoster.Width-nameSize.Width)/2, 50));
+                imgPoster.Save("C:\\123.png");
+            }
+            return Content("OK");
         }
     }
 }
