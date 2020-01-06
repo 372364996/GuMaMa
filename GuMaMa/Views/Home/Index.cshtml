@@ -24,7 +24,7 @@
 </head>
 <body>
     @* <embed src="~/Content/media/" hidden="true" autostart="true" loop="true">*@
-    <video autoplay="autoplay" name="media"><source src="~/Content/media/laomu.m4a" type="audio/mpeg"></video>
+    <audio controls id="bgaudio" name="media"><source src="~/Content/media/laomu.mp3" type="audio/mpeg"></audio>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -32,5 +32,70 @@
             </div>
         </div>
     </div>
+    <script>
+        var audio = document.getElementById("bgaudio");
+        var voiceStatu = true;
+        //监听 touchstart 事件进而调用 <audio> 元素提供的 play() 方法播放音频
+
+        //['mοusemοve', 'touchstart'].forEach(function (item, index) {
+
+        //})
+        document.addEventListener("touchstart", function (e) {
+            if (voiceStatu) {
+                audio.play();
+                voiceStatu = false;
+            }
+        }, false);
+        document.addEventListener("mοusemοve", function (e) {
+            if (voiceStatu) {
+                audio.play();
+                voiceStatu = false;
+            }
+        }, false);
+            //document.οnmοusemοve = function () {
+            //    if (voiceStatu) {
+            //        audio.play();
+            //        voiceStatu = false;
+            //    }
+            //}
+            //function play() {
+            //    audio.play();
+            //    alert("play");
+            //}
+            //function pause() {
+            //    audio.pause();
+            //    alert("pause");
+
+            //}
+            //play();
+            //audio.addEventListener("canplay", function () {//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
+            //    console.log('音频文件加载完成............')
+            //    audio.loading = false;
+            //    audio.play();
+            //});
+
+            //document.onmousemove = function () {
+            //    if (audio.paused) {
+            //        //alert("run");
+            //        audio.play();
+            //    }
+
+            //}
+                                                    //document.body.addEventListener("mousemove", function () {
+                                                    //    audio.play()
+                                                    //})
+                                                                //var bgaudio = document.getElementById("bgaudio");
+                                                                //var myVar =setInterval(function () {
+                                                                //    console.log(bgaudio.readyState);
+
+                                                                //    bgaudio.play();
+                                                                //    if (!bgaudio.paused) {
+                                                                //        clearInterval(myVar);
+                                                                //    }
+                                                                //}, 5000);
+
+
+
+    </script>
 </body>
 </html>
