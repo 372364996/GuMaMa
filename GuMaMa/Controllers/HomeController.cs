@@ -70,12 +70,27 @@ namespace GuMaMa.Controllers
             var imgPoster = Bitmap.FromFile(HttpContext.Server.MapPath("~/Content/images/yuebao.png"));
             using (Graphics g = Graphics.FromImage(imgPoster))
             {
+
                 var name = "用户名:进击的";
-                Font fontName = new Font("微软雅黑", 20,FontStyle.Bold);
-                SizeF nameSize = g.MeasureString(name, fontName);
+                var date = $"{DateTime.Now.Year}年{DateTime.Now.Month}月收支统计";
+                var balance = $"账户余额：6879元";
+                var income = $"本月收入：123元";
+                Font nameFont = new Font("微软雅黑", 20, FontStyle.Bold);
+                Font datetFont = new Font("微软雅黑", 20, FontStyle.Bold);
+                Font balanceFont = new Font("微软雅黑", 23, FontStyle.Bold);
+                Font incomeFont = new Font("微软雅黑", 23, FontStyle.Bold);
+                SizeF nameSize = g.MeasureString(name, nameFont);
+                SizeF dateSize = g.MeasureString(date, datetFont);
+                SizeF incomeSize = g.MeasureString(income.ToString(), incomeFont);
+                SizeF balanceSize = g.MeasureString(balance.ToString(), balanceFont);
                 SolidBrush nameBrush = new SolidBrush(Color.FromArgb(182, 29, 28));
-                g.DrawString(name, fontName, nameBrush, new PointF((imgPoster.Width-nameSize.Width)/2, 50));
-                imgPoster.Save("C:\\123.png");
+                SolidBrush incomeBrush = new SolidBrush(Color.FromArgb(133, 196, 71));
+                SolidBrush balanceBrush = new SolidBrush(Color.FromArgb(239, 105, 4));
+                g.DrawString(name, nameFont, nameBrush, new PointF((imgPoster.Width - nameSize.Width) / 2, 50));
+                g.DrawString(date, datetFont, Brushes.White, new PointF((imgPoster.Width - dateSize.Width) / 2, 300));
+                g.DrawString(income.ToString(), incomeFont, incomeBrush, new PointF((imgPoster.Width - incomeSize.Width) / 2, 330));
+                g.DrawString(balance.ToString(), balanceFont, balanceBrush, new PointF((imgPoster.Width - balanceSize.Width) / 2, 400));
+                imgPoster.Save("D:\\123.png");
             }
             return Content("OK");
         }
