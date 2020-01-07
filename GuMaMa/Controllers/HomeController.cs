@@ -67,30 +67,47 @@ namespace GuMaMa.Controllers
 
         public ActionResult GeneratePic()
         {
-            var imgPoster = Bitmap.FromFile(HttpContext.Server.MapPath("~/Content/images/yuebao.png"));
-            using (Graphics g = Graphics.FromImage(imgPoster))
-            {
+           
 
+
+            for (int i = 0; i < 10; i++)
+            {
+                var imgPoster = Bitmap.FromFile(HttpContext.Server.MapPath("~/Content/images/yuebao.jpg"));
+                Graphics g = Graphics.FromImage(imgPoster);
                 var name = "用户名:进击的";
                 var date = $"{DateTime.Now.Year}年{DateTime.Now.Month}月收支统计";
-                var balance = $"账户余额：6879元";
-                var income = $"本月收入：123元";
-                Font nameFont = new Font("微软雅黑", 20, FontStyle.Bold);
-                Font datetFont = new Font("微软雅黑", 20, FontStyle.Bold);
-                Font balanceFont = new Font("微软雅黑", 23, FontStyle.Bold);
-                Font incomeFont = new Font("微软雅黑", 23, FontStyle.Bold);
+                var balance = $"账户余额：{i}元";
+                var income = $"本月收入：{i}元";
+                var incomeMoney = 123;
+                var tip = incomeMoney > 0 ? "再接再厉！    再创佳绩！" : "您可以尝试使用打折功能哦！";
+                Font nameFont = new Font("微软雅黑", 80, FontStyle.Bold);
+                Font datetFont = new Font("微软雅黑", 80, FontStyle.Bold);
+                Font balanceFont = new Font("微软雅黑", 85, FontStyle.Bold);
+                Font incomeFont = new Font("微软雅黑", 85, FontStyle.Bold);
+                Font tipFont = new Font("微软雅黑", 85, FontStyle.Bold);
+
                 SizeF nameSize = g.MeasureString(name, nameFont);
                 SizeF dateSize = g.MeasureString(date, datetFont);
-                SizeF incomeSize = g.MeasureString(income.ToString(), incomeFont);
+                SizeF incomeSize = g.MeasureString(balance.ToString(), incomeFont);
                 SizeF balanceSize = g.MeasureString(balance.ToString(), balanceFont);
+                SizeF tipSize = g.MeasureString(tip.ToString(), tipFont);
                 SolidBrush nameBrush = new SolidBrush(Color.FromArgb(182, 29, 28));
                 SolidBrush incomeBrush = new SolidBrush(Color.FromArgb(133, 196, 71));
                 SolidBrush balanceBrush = new SolidBrush(Color.FromArgb(239, 105, 4));
-                g.DrawString(name, nameFont, nameBrush, new PointF((imgPoster.Width - nameSize.Width) / 2, 50));
-                g.DrawString(date, datetFont, Brushes.White, new PointF((imgPoster.Width - dateSize.Width) / 2, 300));
-                g.DrawString(income.ToString(), incomeFont, incomeBrush, new PointF((imgPoster.Width - incomeSize.Width) / 2, 330));
-                g.DrawString(balance.ToString(), balanceFont, balanceBrush, new PointF((imgPoster.Width - balanceSize.Width) / 2, 400));
-                imgPoster.Save("D:\\123.png");
+                g.DrawString(name, nameFont, nameBrush, new PointF((imgPoster.Width - nameSize.Width) / 2, 210));
+                g.DrawString(date, datetFont, nameBrush, new PointF((imgPoster.Width - dateSize.Width) / 2, 990));
+                g.DrawString(income, incomeFont, incomeBrush, new PointF((imgPoster.Width - incomeSize.Width) / 2, 1500));
+                g.DrawString(balance, balanceFont, balanceBrush, new PointF((imgPoster.Width - balanceSize.Width) / 2, 1800));
+                g.DrawString(tip, tipFont, Brushes.White, new PointF((imgPoster.Width - tipSize.Width) / 2, 2090));
+                if (!Directory.Exists(Server.MapPath("~/yuebao")))
+                {
+                    Directory.CreateDirectory(Server.MapPath("~/yuebao"));
+                }
+                imgPoster.Save(Server.MapPath($"~/yuebao/{i}.jpg"));
+                g = Graphics.FromImage(Bitmap.FromFile(HttpContext.Server.MapPath("~/Content/images/yuebao.jpg")));
+
+
+                g.Dispose();
             }
             return Content("OK");
         }
